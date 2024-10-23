@@ -10,5 +10,7 @@ Autores;
 
 -Issac Segura
 
+-Kristel Rivera
+
 
 Este repositorio tiene la intención de resolver problemas de reservas usando SWING de JAVA
