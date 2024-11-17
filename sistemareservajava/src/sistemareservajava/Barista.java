@@ -12,84 +12,58 @@ import javax.swing.JOptionPane;
  */
 
 public class Barista {
-    private String baristaNuevo = "";
-    private String empleado = "";
-    private int numEmpleado = 0;
-    private EnumMenu menu;
-    private int numBebida;
+    private String baristaNom;
+    private String baristaId;
     
-    public void ingresarEmpleados(){
-        /*
-        Ingreso de Empleados
-        */
-        this.numEmpleado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de empleados"));
-        for (int i = 0; i < this.numEmpleado; i++) {
-            this.empleado = JOptionPane.showInputDialog("Ingrese el nombre del empleado");
-        }
-    }    
-    
+    public static void crear_Barista(){
+    /* 
+    Metodo para crear un barista manejando errores
+    */
+        try {
+            int matrixSize = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos baristas va a ingresar?"));
+            Barista[] baristaNuevo = new Barista[matrixSize];
+
+            for (int i = 0; i < baristaNuevo.length; i++) {
+                String baristaNom = JOptionPane.showInputDialog("Ingrese el nombre del barista:");
+                String baristaId = JOptionPane.showInputDialog("Ingrese la cédula del barista:");
+                baristaNuevo[i] = new Barista(baristaNom, baristaId);
+                System.out.println(baristaNuevo[i].toString());
+            }
+        } 
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, ingrese un número.");
+        } 
+    }
     /*
-    Constructores empiezan aca 
+    Constructors para la aplicacion
     */
     public Barista() {
-    
     }
     
-    public Barista(String baristaNuevo, String empleado, int numEmpleado, EnumMenu menu) {
-        this.baristaNuevo = baristaNuevo;
-        this.empleado = empleado;
-        this.numEmpleado = numEmpleado;
-        this.menu = menu;
+    public Barista(String baristaNom, String baristaId) {
+        this.baristaNom = baristaNom;
+        this.baristaId = baristaId;
     }
-
-    /*
-    Terminan Constructores 
-    */
+       
     
-    /*
-    Getters y Setters para la extraccion 
-    */
-    
-    public int getNumBebida() {
-        return numBebida;
-    }
-    
-    public EnumMenu getMenu() {
-        return menu;
+    @Override
+    public String toString() {
+        return "Barista{" + "baristaNom=" + baristaNom + ", baristaId=" + baristaId + '}';
     }
 
-    public void setMenu(EnumMenu menu) {
-        this.menu = menu;
-    }  
-
-    public int getNumEmpleado() {
-        return numEmpleado;
-    }
-
-    public void setNumEmpleado(int numEmpleado) {
-        this.numEmpleado = numEmpleado;
-    }     
-        
     public String getBaristaNuevo() {
-        return baristaNuevo;
+        return baristaNom;
     }
 
-    public void setBaristaNuevo() {
-        this.baristaNuevo = JOptionPane.showInputDialog("Ingrese el nombre del Barista");
+    public void setBaristaNuevo(String baristaNuevo) {
+        this.baristaNom = baristaNuevo;
     }
 
-    public String getEmpleado() {   
-        return empleado;
+    public String getBaristaId() {
+        return baristaId;
     }
 
-    public void setEmpleado(String empleado) {
-        this.empleado = empleado;
+    public void setBaristaId(String baristaId) {
+        this.baristaId = baristaId;
     }
-
-    
-    /*  
-    Terminan Getters y Setters para la extraccion 
-    */
-
-    
 }
