@@ -4,6 +4,9 @@
  */
 package sistemareservajava;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author hande
@@ -15,5 +18,10 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here 
+                /*
+        Menu Para desplegar beta
+        */      
+        ventanaPrincipal venta = new ventanaPrincipal("Sistema de Reservas");
+        venta.mostrarVentana();
     }
 }

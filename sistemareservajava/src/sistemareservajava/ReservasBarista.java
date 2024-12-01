@@ -21,6 +21,18 @@ public class ReservasBarista {
     public ReservasBarista[] reservasRealizadas;
 
     /*
+    Datos precargados
+     */
+    public void precargarReservas() {
+        // Precargar información inicial
+        this.reservasRealizadas = new ReservasBarista[]{
+            new ReservasBarista("Juan Pérez", "101010101", "CAPUCHINO - Hora de entrega: 10:15", "Y", 1),
+            new ReservasBarista("María Gómez", "202020202", "CAFE_NORMAL - Hora de entrega: 10:20", "Y", 1),
+            new ReservasBarista("Carlos López", "303030303", "TE_CHAI - Hora de entrega: 10:25", "Y", 1)
+        };
+    }
+
+    /*
     Metodos de la clase 
      */
     public void desplegarMenu() {
@@ -42,42 +54,54 @@ public class ReservasBarista {
     public String seleccionBebida() {
         int x = Integer.parseInt(JOptionPane.showInputDialog("Ingrese un valor del 1-7"));
         LocalDateTime locaDate = LocalDateTime.now();
-        String resultado = "";
+        int preparacion;
+        String bebidaSeleccionada = "";
         switch (x) {
             case 1:
-                resultado = EnumMenu.getCAFE_NORMAL().name();
+                bebidaSeleccionada = EnumMenu.getCAFE_NORMAL().name();
+                preparacion = 5;
                 break;
 
             case 2:
-                resultado = EnumMenu.getCAPUCHINO().name();
+                bebidaSeleccionada = EnumMenu.getCAPUCHINO().name();
+                preparacion = 6;
                 break;
             case 3:
-                resultado = EnumMenu.getCAPUCHINO_VAINILLA().name();
+                bebidaSeleccionada = EnumMenu.getCAPUCHINO_VAINILLA().name();
+                preparacion = 7;
                 break;
             case 4:
-                resultado = EnumMenu.getCHOCOLATE().name();
+                bebidaSeleccionada = EnumMenu.getCHOCOLATE().name();
+                preparacion = 8;
                 break;
             case 5:
-                resultado = EnumMenu.getMOKA().name();
+                bebidaSeleccionada = EnumMenu.getMOKA().name();
+                preparacion = 9;
                 break;
             case 6:
-                resultado = EnumMenu.getTE_CHAI().name();
+                bebidaSeleccionada = EnumMenu.getTE_CHAI().name();
+                preparacion = 10;
                 break;
             case 7:
-                resultado = EnumMenu.getCAFE_FRIO().name();
+                bebidaSeleccionada = EnumMenu.getCAFE_FRIO().name();
+                preparacion = 5;
                 break;
             default:
                 throw new AssertionError("Numero no valido");
         }
-        return resultado;
+        LocalDateTime horaEntrega = locaDate.plusMinutes(preparacion);
+        // Imprimir hora de entrega
+        JOptionPane.showMessageDialog(null, "Bebida seleccionada: " + bebidaSeleccionada + "\nHora de entrega: " + horaEntrega.toLocalTime());
+
+        return bebidaSeleccionada + " - Hora de entrega: " + horaEntrega.toLocalTime();
     }
 
-    public ReservasBarista[] iniciarMetodos(){
+    public ReservasBarista[] iniciarMetodos() {
         int matrixSize = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántas reservas va a ingresar?"));
         ReservasBarista[] reservaNueva = new ReservasBarista[matrixSize];
         return reservaNueva;
-    }   
-    
+    }
+
     public void ingresarReserva() {
         ReservasBarista[] reservaNueva = iniciarMetodos();
         for (int i = 0; i < reservaNueva.length; i++) {
@@ -88,7 +112,7 @@ public class ReservasBarista {
              */
             boolean existeReserva = false;
             for (int j = 0; j < i; j++) {
-                if (reservaNueva[j].getEmpleado().equals(empleado)|| reservaNueva[j].getIdEmpleado().equals(idEmpleado)) {
+                if (reservaNueva[j].getEmpleado().equals(empleado) || reservaNueva[j].getIdEmpleado().equals(idEmpleado)) {
                     existeReserva = true;
                     break;
                 }
@@ -111,13 +135,12 @@ public class ReservasBarista {
         }
         this.reservasRealizadas = reservaNueva;
     }
-    
-    
-    public void modificarReserva(){
-    
-       System.out.println("Se usara para modificar reservas!");
-       String idEmpleado = JOptionPane.showInputDialog("Ingrese la cédula del empleado a modificar:");
-       boolean reservaEncontrada = false;
+
+    public void modificarReserva() {
+
+        System.out.println("Se usara para modificar reservas!");
+        String idEmpleado = JOptionPane.showInputDialog("Ingrese la cédula del empleado a modificar:");
+        boolean reservaEncontrada = false;
 
         // Buscar la reserva por idEmpleado
         for (int i = 0; i < reservasRealizadas.length; i++) {
@@ -138,29 +161,28 @@ public class ReservasBarista {
         if (!reservaEncontrada) {
             JOptionPane.showMessageDialog(null, "No se encontró ninguna reserva para el empleado con cédula: " + idEmpleado);
         }
-    
+
     }
-    
-    public void listarReservas(){
+
+    public void listarReservas() {
         StringBuilder reservasLista = new StringBuilder();
         for (int i = 0; i < reservasRealizadas.length; i++) {
-             System.out.println("Se va usar para dar lista de reservas");
-             reservasLista.append(reservasRealizadas[i].toString() + "\n");
-         }
+            System.out.println("Se va usar para dar lista de reservas");
+            reservasLista.append(reservasRealizadas[i].toString() + "\n");
+        }
         JOptionPane.showMessageDialog(null, "Reserva modificada: " + reservasLista.toString());
     }
-    
-    
+
     /*
     Constructores 
      */
-
     @Override
     public String toString() {
         return "ReservasBarista{" + "empleado=" + empleado + ", idEmpleado=" + idEmpleado + ", bebidaReservada=" + bebidaReservada + ", ifBebidaReservada=" + ifBebidaReservada + ", numBebidasReserva=" + numBebidasReserva + '}';
     }
 
     public ReservasBarista() {
+        precargarReservas();
     }
 
     public ReservasBarista(String empleado, String idEmpleado, String bebidaReservada, String ifBebidaReservada, int numBebidasReserva) {
@@ -171,17 +193,14 @@ public class ReservasBarista {
         this.numBebidasReserva = numBebidasReserva;
     }
 
-
-
     /*
     Getter & Setters para la applicacion
      */
-
     public ReservasBarista[] getReservasRealizadas() {
         return reservasRealizadas;
     }
 
-    public void setReservasRealizadas(ReservasBarista[] reservasRealizadas) {    
+    public void setReservasRealizadas(ReservasBarista[] reservasRealizadas) {
         this.reservasRealizadas = reservasRealizadas;
     }
 
