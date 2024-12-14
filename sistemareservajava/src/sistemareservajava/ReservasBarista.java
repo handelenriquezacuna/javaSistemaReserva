@@ -52,93 +52,98 @@ public class ReservasBarista {
     }
 
     public String seleccionBebida() {
-        int x = Integer.parseInt(JOptionPane.showInputDialog("Ingrese un valor del 1-7"));
-        LocalDateTime locaDate = LocalDateTime.now();
-        int preparacion;
-        String bebidaSeleccionada = "";
-        switch (x) {
-            case 1:
-                bebidaSeleccionada = EnumMenu.getCAFE_NORMAL().name();
-                preparacion = 5;
-                break;
+        desplegarMenu();
+        while (true) {
+            try {
+                int opcion = Integer.parseInt(JOptionPane.showInputDialog("Ingrese un valor del 1 al 7 para seleccionar una bebida:"));
+                LocalDateTime horaActual = LocalDateTime.now();
+                int tiempoPreparacion;
+                String bebidaSeleccionada = "";
 
-            case 2:
-                bebidaSeleccionada = EnumMenu.getCAPUCHINO().name();
-                preparacion = 6;
-                break;
-            case 3:
-                bebidaSeleccionada = EnumMenu.getCAPUCHINO_VAINILLA().name();
-                preparacion = 7;
-                break;
-            case 4:
-                bebidaSeleccionada = EnumMenu.getCHOCOLATE().name();
-                preparacion = 8;
-                break;
-            case 5:
-                bebidaSeleccionada = EnumMenu.getMOKA().name();
-                preparacion = 9;
-                break;
-            case 6:
-                bebidaSeleccionada = EnumMenu.getTE_CHAI().name();
-                preparacion = 10;
-                break;
-            case 7:
-                bebidaSeleccionada = EnumMenu.getCAFE_FRIO().name();
-                preparacion = 5;
-                break;
-            default:
-                throw new AssertionError("Numero no valido");
+                switch (opcion) {
+                    case 1:
+                        bebidaSeleccionada = EnumMenu.getCAFE_NORMAL().name();
+                        tiempoPreparacion = 5;
+                        break;
+                    case 2:
+                        bebidaSeleccionada = EnumMenu.getCAPUCHINO().name();
+                        tiempoPreparacion = 6;
+                        break;
+                    case 3:
+                        bebidaSeleccionada = EnumMenu.getCAPUCHINO_VAINILLA().name();
+                        tiempoPreparacion = 7;
+                        break;
+                    case 4:
+                        bebidaSeleccionada = EnumMenu.getCHOCOLATE().name();
+                        tiempoPreparacion = 8;
+                        break;
+                    case 5:
+                        bebidaSeleccionada = EnumMenu.getMOKA().name();
+                        tiempoPreparacion = 9;
+                        break;
+                    case 6:
+                        bebidaSeleccionada = EnumMenu.getTE_CHAI().name();
+                        tiempoPreparacion = 10;
+                        break;
+                    case 7:
+                        bebidaSeleccionada = EnumMenu.getCAFE_FRIO().name();
+                        tiempoPreparacion = 5;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Opción inválida. Seleccione un número entre 1 y 7.");
+                }
+
+                LocalDateTime horaEntrega = horaActual.plusMinutes(tiempoPreparacion);
+                JOptionPane.showMessageDialog(null, "Bebida seleccionada: " + bebidaSeleccionada + "\nHora de entrega: " + horaEntrega.toLocalTime());
+                return bebidaSeleccionada + " - Hora de entrega: " + horaEntrega.toLocalTime();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Debe ingresar un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        LocalDateTime horaEntrega = locaDate.plusMinutes(preparacion);
-        // Imprimir hora de entrega
-        JOptionPane.showMessageDialog(null, "Bebida seleccionada: " + bebidaSeleccionada + "\nHora de entrega: " + horaEntrega.toLocalTime());
-
-        return bebidaSeleccionada + " - Hora de entrega: " + horaEntrega.toLocalTime();
     }
 
     public ReservasBarista[] iniciarMetodos() {
-        int matrixSize = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántas reservas va a ingresar?"));
-        ReservasBarista[] reservaNueva = new ReservasBarista[matrixSize];
-        return reservaNueva;
-    }
-
-    public void ingresarReserva() {
-        ReservasBarista[] reservaNueva = iniciarMetodos();
-        for (int i = 0; i < reservaNueva.length; i++) {
-            String empleado = JOptionPane.showInputDialog("Ingrese nombre de Empleado:");
-            String idEmpleado = JOptionPane.showInputDialog("Ingrese la cédula del Empleado:");
-            /*
-            Verificar si el idEmpleado ya está registrado
-             */
-            boolean existeReserva = false;
-            for (int j = 0; j < i; j++) {
-                if (reservaNueva[j].getEmpleado().equals(empleado) || reservaNueva[j].getIdEmpleado().equals(idEmpleado)) {
-                    existeReserva = true;
-                    break;
+        while (true) {
+            try {
+                int cantidadReservas = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántas reservas va a ingresar?"));
+                if (cantidadReservas <= 0) {
+                    throw new IllegalArgumentException("Debe ingresar un número mayor a cero.");
                 }
+                return new ReservasBarista[cantidadReservas];
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Debe ingresar un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            if (existeReserva) {
-                JOptionPane.showMessageDialog(null, "Error: Usuario con reserva existente.");
-                i--; // Tolerancia al fallo de usuario
-                continue;
-            }
-            /*
-                Enseña el menu al usuario
-             */
-            desplegarMenu();
-            String bebidaReservada = seleccionBebida();
-            String ifBebidaReservada = "Y";
-            int numBebidasReserva = 1;
-            reservaNueva[i] = new ReservasBarista(empleado, idEmpleado, bebidaReservada, ifBebidaReservada, numBebidasReserva);
-            System.out.println(reservaNueva[i].toString());
         }
-        this.reservasRealizadas = reservaNueva;
     }
 
+    public void ingresarReservaV2(String empleado, String idEmpleado, String bebidaReservada) {
+        // Validar si el empleado ya tiene una reserva
+        for (ReservasBarista reserva : reservasRealizadas) {
+            if (reserva.getIdEmpleado().equals(idEmpleado)) {
+                JOptionPane.showMessageDialog(null, "Error: Ya existe una reserva para este empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Exit if the employee already has a reservation
+            }
+        }
+
+        // Si la reserva es válida, agregarla
+        ReservasBarista nuevaReserva = new ReservasBarista(empleado, idEmpleado, bebidaReservada, "Y", 1);
+        System.out.println(nuevaReserva.toString());
+
+        // Fusionar reservas existentes con nuevas
+        int totalReservas = reservasRealizadas.length + 1;
+        ReservasBarista[] todasLasReservas = new ReservasBarista[totalReservas];
+        System.arraycopy(reservasRealizadas, 0, todasLasReservas, 0, reservasRealizadas.length);
+        todasLasReservas[reservasRealizadas.length] = nuevaReserva;
+        reservasRealizadas = todasLasReservas;
+    }
+    
     public void modificarReserva() {
 
-        System.out.println("Se usara para modificar reservas!");
+//        System.out.println("Se usara para modificar reservas!");
         String idEmpleado = JOptionPane.showInputDialog("Ingrese la cédula del empleado a modificar:");
         boolean reservaEncontrada = false;
 
@@ -167,7 +172,7 @@ public class ReservasBarista {
     public void listarReservas() {
         StringBuilder reservasLista = new StringBuilder();
         for (int i = 0; i < reservasRealizadas.length; i++) {
-            System.out.println("Se va usar para dar lista de reservas");
+//            System.out.println("Se va usar para dar lista de reservas");
             reservasLista.append(reservasRealizadas[i].toString() + "\n");
         }
         JOptionPane.showMessageDialog(null, "Reserva modificada: " + reservasLista.toString());
