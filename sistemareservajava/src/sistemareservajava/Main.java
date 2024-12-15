@@ -20,5 +20,8 @@ public class Main {
         */      
         ventanaPrincipal venta = new ventanaPrincipal("Sistema de Reservas");
         venta.mostrarVentana();
+        
+        MenuGimnasio menu = new MenuGimnasio();
+      menu.mostrarMenu();
     }
 }
