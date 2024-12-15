@@ -9,21 +9,63 @@ package sistemareservajava;
  * @author krist
  */
 class Horario {
+ //Atributos
+    private Hora[] horas;
 
-    void verDisponibilidad() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    //Constructor sin parametros **
+    public Horario() {
+        horas = new Hora[6];
+        for (int i = 0; i < 6; i++) { //para hacerlo 24horas lo de abajo
+            horas[i] = new Hora(14 + i); //Inicializa desde las 14:00 hasta las 19:00
+        }
+    }
+    //Setter y Getter
+    public Hora[] getHoras() {
+        return horas;
     }
 
-    boolean reservarHora(int hora, String idEmpleado) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setHoras(Hora[] horas) {
+        this.horas = horas;
     }
 
-    void liberarHora(int hora) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    //Metodos
+    public void verDisponibilidad() {
+        for (int i = 0; i < horas.length; i++) {
+            System.out.println(horas[i]); // Imprime la hora usando el método toString() de Hora.
+        }
     }
 
-    boolean verDisponibilidadHora(int hora) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean reservarHora(int hora, String idEmpleado) { //va recorriendo todo el horario para comparar y rreservar la hora que es
+        for (int i = 0; i < horas.length; i++) {
+            if (horas[i].getHora() == hora) { //Compara directamente con la hora.
+                if (horas[i].reservar(idEmpleado)) {
+                    return true; //Reserva exitosa.
+                } else { //si no encuentra la hora es porque ya esta reservada 
+                    System.out.println("La hora ya esta reservada.");
+                    return false;
+                }
+            }
+        }
+        System.out.println("Hora no encontrada.");
+        return false; //Retorna false si no encuentra la hora.
     }
-    
+
+    public void liberarHora(int hora) {
+        for (int i = 0; i < horas.length; i++) {
+            if (horas[i].getHora() == hora) { //Compara directamente con la hora.
+                horas[i].liberar(); //Libera la reserva.
+                System.out.println("Hora liberada con exito.");
+                return; //Termina después de liberar la hora(for)
+            }
+        }
+        System.out.println("Hora no encontrada."); //si no lo encuentra 
+    }
+    public boolean verDisponibilidadHora(int hora) {
+        for (int i = 0; i < horas.length; i++) {
+            if (horas[i].getHora() == hora) { //Encuentra la hora específica.
+                return horas[i].isDisponible(); //Devuelve true si está disponible.
+            }
+        }
+        return false; //Hora no encontrada.
+    }
 }
