@@ -4,6 +4,8 @@
  */
 package sistemareservajava;
 
+import sistemareservajava.Cine;
+
 /**
  *
  * @author hande
@@ -15,13 +17,18 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here 
-                /*
+        /*
         Menu Para desplegar beta
-        */      
+         */
+
         ventanaPrincipal venta = new ventanaPrincipal("Sistema de Reservas");
         venta.mostrarVentana();
-        
+
         MenuGimnasio menu = new MenuGimnasio();
-      menu.mostrarMenu();
+        menu.mostrarMenu();
+
+        // Punto de entrada del programa
+        Cine cine = new Cine(); //objeto de la clase Cine
+        cine.iniciarGestion();  // Llama al mtodo para iniciar la gestion
     }
 }
