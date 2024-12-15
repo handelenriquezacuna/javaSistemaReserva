@@ -21,7 +21,7 @@ public class ventanaPrincipal extends JFrame {
     private JTextField bebidaReservadaField;
     private JButton seleccionBebidaButton;
     private boolean[] bebidaSeleccionada = {false};
-    private String path = "{Modificar con path de images}";
+    private String path = "C:/Users/hande/OneDrive/Documents/poc_git/javaSistemaReserva/sistemareservajava/png_images/";
     public ventanaPrincipal(String titulo) {
         super(titulo);
         // Configuración de la ventana principal
@@ -44,8 +44,11 @@ public class ventanaPrincipal extends JFrame {
         JButton botonBebidas = crearBotonConIcono("Bebidas", new Color(231, 76, 60), path+"juicer.png");
 
         // Agregar ActionListeners a los botones
-        botonCine.addActionListener(e -> JOptionPane.showMessageDialog(this, "Funcionalidad de Cine aún no implementada."));
-        botonGimnasio.addActionListener(e -> JOptionPane.showMessageDialog(this, "Funcionalidad de Gimnasio aún no implementada."));
+        Cine cine = new Cine(); //objeto de la clase Cine
+        botonCine.addActionListener(e -> cine.iniciarGestion());
+        MenuGimnasio menu = new MenuGimnasio();
+        botonGimnasio.addActionListener(e -> menu.mostrarMenu());
+        // WIP clase para actividades // 
         botonActividad.addActionListener(e -> JOptionPane.showMessageDialog(this, "Funcionalidad de Actividades aún no implementada."));
         botonBebidas.addActionListener(e -> openNewWindow("Bebidas"));
 

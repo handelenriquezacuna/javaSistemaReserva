@@ -23,12 +23,5 @@ public class Main {
 
         ventanaPrincipal venta = new ventanaPrincipal("Sistema de Reservas");
         venta.mostrarVentana();
-
-        MenuGimnasio menu = new MenuGimnasio();
-        menu.mostrarMenu();
-
-        // Punto de entrada del programa
-        Cine cine = new Cine(); //objeto de la clase Cine
-        cine.iniciarGestion();  // Llama al mtodo para iniciar la gestion
     }
 }
