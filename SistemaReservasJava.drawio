@@ -119,7 +119,7 @@
           <mxGeometry y="68" width="200" height="142" as="geometry" />
         </mxCell>
         <mxCell id="BRECib-q6GYgZaCisQO4-0" value="SalaMenuGimnasio" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="910" y="-1300" width="200" height="210" as="geometry" />
+          <mxGeometry x="890" y="-1300" width="200" height="210" as="geometry" />
         </mxCell>
         <object label="&lt;div&gt;-Gimnasio gimnasio&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" id="BRECib-q6GYgZaCisQO4-1">
           <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="BRECib-q6GYgZaCisQO4-0">
